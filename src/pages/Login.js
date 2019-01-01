@@ -4,10 +4,6 @@ import Page from '../components/Page'
 
 class LoginPage extends Component {
 
-  constructor(props){
-    super(props);
-  }
-
   render() {
     return (
         <Page title="Login" showMenu={false}>
@@ -15,6 +11,7 @@ class LoginPage extends Component {
         </Page>
     );
   }
+
 }
 
 export default LoginPage;

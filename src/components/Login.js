@@ -1,29 +1,24 @@
 import React, { Component } from 'react';
-import { RaisedButton, TextField, AppBar, Snackbar } from 'material-ui';
-import axios from 'axios'
+import { RaisedButton, TextField, Snackbar } from 'material-ui';
+import { login } from '../services/auth'
+import { withRouter } from "react-router-dom";
 
 class Login extends Component {
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       open: false,
-      username: '',
-      password: '',
     }
   }
 
-  login = () => {
-    axios.post('/login', {
-      username: this.state.username,
-      password: this.state.password
-    }).then((res) => {
-      if(res.data.message === 'Success') {
+  handleLogin = () => {
+    login(this.state.username, this.state.password)
+      .then((res) => {
         this.props.history.push('/home');
-      }
-    }).catch((err) => {
-      this.handleSnackError();
-    });
+      }).catch(() => {
+        this.handleSnackError();
+      });
   }
 
   handleSnackError = () => {
@@ -32,23 +27,29 @@ class Login extends Component {
     });
   };
 
+  handleChange = (event) => {
+    this.setState({[event.target.name]: event.target.value});
+  }
+
   render() {
     return (
           <div className="login-container">
             <TextField
+                name="username"
                 hintText="Enter your Username"
                 floatingLabelText="Username"
-                onChange = {(event,newValue) => this.setState({username:newValue})}
+                onChange={this.handleChange}
             />
             <br/>
             <TextField
+                name="password"
                 type="password"
                 hintText="Enter your Password"
                 floatingLabelText="Password"
-                onChange = {(event,newValue) => this.setState({password:newValue})}
+                onChange={this.handleChange}
             />
             <br/>
-            <RaisedButton label="Submit" primary={true} onClick={this.login} />
+            <RaisedButton label="Submit" primary={true} onClick={() => this.handleLogin()} />
             <Snackbar
                 open={this.state.open}
                 message="Login Failed"
@@ -60,4 +61,4 @@ class Login extends Component {
   }
 }
 
-export default Login
+export default withRouter(Login);

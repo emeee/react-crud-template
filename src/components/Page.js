@@ -3,10 +3,6 @@ import { AppBar } from 'material-ui';
 
 class Page extends Component {
 
-  constructor(props){
-    super(props);
-  }
-
   render() {
     return (
         <div className="page">
