@@ -6,3 +6,7 @@ export const login = (username, password) => {
     password: password
   });
 }
+
+export const getAllUsers = () => {
+  return axios.get('/user/all');
+}
